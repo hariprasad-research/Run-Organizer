@@ -1,0 +1,24 @@
+kind = "mobile"
+previewPath = "/"
+title = "RunQuest"
+description = "A mobile-first running adventure game that turns real-world runs into missions, XP, levels, rewards, achievements, and a reason to come back tomorrow."
+version = "1.0.0"
+id = "artifacts/runquest"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/" ]
+localPort = 20730
+
+[services.development]
+run = "pnpm --filter @workspace/runquest run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/runquest", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/runquest", "run", "serve" ]
+
+[services.env]
+PORT = "20730"
+BASE_PATH = "/"

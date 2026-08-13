@@ -1,0 +1,239 @@
+## Project Goal
+
+Build a mobile-first web app that turns real-world running into an adventure game. The app should motivate people to run regularly by giving them goals, missions, levels, XP, rewards, achievements, and a sense of progression instead of functioning only as a running-distance tracker.
+
+The core concept is:
+
+**“Your real-world running becomes your game progress.”**
+
+The experience should feel inspired by the progression and excitement of games like Temple Run, Subway Surfers, and Pokémon GO, while remaining an original concept.
+
+## MVP — Version 1
+
+Build the first playable version with these core features:
+
+1. User registration/login.
+2. Player profile with:
+
+   * Username
+   * Profile image
+   * Current level
+   * XP
+   * Coins
+   * Total distance
+   * Total runs
+   * Best pace
+   * Current running streak
+3. A game-style home screen showing:
+
+   * Current level
+   * XP progress bar
+   * Current mission
+   * Next unlock
+   * Running streak
+   * Start Run button
+4. Mission system:
+
+   * Distance missions
+   * Time missions
+   * Pace/speed missions
+   * Streak missions
+   * Challenge missions
+5. Live running screen using GPS/location when available:
+
+   * Distance
+   * Running time
+   * Current speed
+   * Average pace
+   * GPS route
+   * Start/Pause/Resume/Finish
+6. Mission completion screen:
+
+   * Distance completed
+   * Time
+   * Pace
+   * XP earned
+   * Coins earned
+   * Achievement unlocked
+   * Next mission unlocked
+7. Running history:
+
+   * Previous runs
+   * Distance
+   * Time
+   * Pace
+   * Date
+   * Mission completed
+8. Level progression:
+
+   * XP-based levels
+   * Increasing mission difficulty
+   * Unlockable achievements
+9. Daily motivation:
+
+   * Daily mission
+   * Streak system
+   * Progress messages
+   * Encouraging game-style feedback
+10. Leaderboard:
+
+* Personal best
+* Weekly distance
+* Weekly XP
+* Optional friends leaderboard
+
+## Game Philosophy
+
+Do NOT design this as a normal fitness tracker.
+
+Avoid making the main experience:
+
+“Here is your distance and pace.”
+
+Instead make the experience:
+
+“You have a mission. Complete it. Earn XP. Level up. Unlock the next adventure.”
+
+Every run should feel like progress in a game.
+
+For example:
+
+MISSION 07 — Forest Run
+
+Goal:
+Run 2.5 KM
+
+Reward:
++250 XP
++50 Coins
+
+After completion:
+
+MISSION COMPLETE!
+
+2.51 KM
+17:42
++250 XP
++50 Coins
+
+MISSION 08 UNLOCKED
+
+## Motivation System
+
+The app should encourage beginners without making them feel like they are competing against professional runners.
+
+Create difficulty categories such as:
+
+Beginner
+Explorer
+Runner
+Athlete
+Elite
+
+Users should progress according to their own ability.
+
+The system should celebrate consistency and improvement, not only speed.
+
+Examples:
+
+“First 500 meters!”
+“New personal best!”
+“3-day streak!”
+“You are 200 meters away from completing today's mission!”
+“Mission complete — tomorrow's adventure is waiting.”
+
+Avoid unhealthy or dangerous encouragement. Never encourage users to ignore pain, exhaustion, unsafe weather, traffic, or physical limitations.
+
+## Future Expansion
+
+Design the architecture so these features can be added later without rebuilding the entire application:
+
+* Real-world game map
+* Virtual collectibles
+* Location-based missions
+* Pokémon-GO-style exploration mechanics
+* Temple Run-style adventure progression
+* Virtual characters
+* Running races
+* Multiplayer challenges
+* Friends
+* Clubs/teams
+* Marathon events
+* Brand partnerships
+* Sports-store offers
+* Shoe/product rewards
+* Real-world coupons
+* Sponsored challenges
+* AR features
+* Smartwatch integration
+* Wearable integration
+
+Do NOT implement all future features now. Build the MVP cleanly so they can be added later.
+
+## UI/UX Direction
+
+The interface should feel like a modern mobile game rather than a medical/fitness dashboard.
+
+Use:
+
+* Strong visual hierarchy
+* Game-style cards
+* XP progress bars
+* Mission cards
+* Achievement badges
+* Smooth animations
+* Clear CTA buttons
+* Modern typography
+* Dark/light theme support
+* Mobile-first responsive design
+
+The Start Run button should be the primary action.
+
+The user should understand the following within a few seconds of opening the app:
+
+1. What level am I?
+2. What is my current mission?
+3. What reward will I get?
+4. How close am I to completing it?
+5. What happens after I complete it?
+
+## Technical Direction
+
+Use a modern web stack suitable for Replit.
+
+Create a clean, modular architecture.
+
+Separate:
+
+* Authentication
+* User profiles
+* Running/GPS tracking
+* Mission engine
+* XP system
+* Reward system
+* Achievement system
+* Level progression
+* Run history
+* Leaderboards
+
+Use persistent database storage rather than temporary browser-only data.
+
+Make the application responsive and optimized primarily for mobile screens.
+
+For GPS tracking, handle location permissions, GPS errors, inaccurate readings, pauses, and interrupted sessions gracefully.
+
+## Most Important Requirement
+
+The application must answer one question:
+
+**“Why would someone want to go outside and run again tomorrow?”**
+
+The answer should be:
+
+**Because there is another mission waiting for them.**
+
+Build the MVP around this motivation loop:
+
+RUN → COMPLETE MISSION → EARN XP → LEVEL UP → UNLOCK NEW MISSION → COME BACK TOMORROW
+
+Start by creating the complete MVP interface and working core functionality. Keep the architecture extensible for the future adventure-game system.
