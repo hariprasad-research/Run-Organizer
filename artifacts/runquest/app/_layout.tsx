@@ -1,24 +1,16 @@
 import React, { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  useFonts,
-} from '@expo-google-fonts/inter';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
 import { RunQuestProvider } from '@/context/RunQuestContext';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
 const queryClient = new QueryClient();
+const WEB_FONT_STACK =
+  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
 function RootLayoutNav() {
   return (
@@ -32,20 +24,12 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
-  const [fontsLoaded, fontError] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-  });
-
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
+    if (Platform.OS === 'web' && typeof document !== 'undefined') {
+      document.documentElement.style.fontFamily = WEB_FONT_STACK;
+      document.body.style.fontFamily = WEB_FONT_STACK;
     }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) return null;
+  }, []);
 
   return (
     <SafeAreaProvider>

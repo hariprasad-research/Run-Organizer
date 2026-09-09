@@ -1,0 +1,1 @@
+- [Expo font timeouts](expo-font-timeouts.md) — never block the root layout or splash screen on optional web font loading.

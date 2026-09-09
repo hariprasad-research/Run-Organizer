@@ -1,0 +1,460 @@
+I want to build the Login, Registration, and First-Time Runner Onboarding system for my running adventure game.
+
+IMPORTANT:
+Do NOT redesign or remove the existing running/game functionality.
+Do NOT change the existing GPS, running tracking, mission, XP, database, or dashboard logic unless required to connect authentication.
+Keep the current visual style of the app and make the new screens feel like part of the same game.
+
+==================================================
+1. AUTHENTICATION
+==================================================
+
+Create a proper authentication system.
+
+Registration should require only:
+
+- Display Name
+- Username
+- Email
+- Password
+
+Optional:
+- Profile picture
+
+Do NOT ask unnecessary personal information during registration.
+
+Users should be able to:
+
+- Create an account
+- Log in
+- Log out
+- Reset/forgot password
+- Stay logged in between sessions
+- See appropriate validation errors
+- Prevent duplicate usernames
+- Prevent duplicate email accounts
+
+Use secure password handling and proper authentication.
+
+If the project already has an authentication/database system, use the existing system instead of creating a duplicate one.
+
+==================================================
+2. REGISTRATION UI
+==================================================
+
+Create a modern mobile-first registration screen.
+
+Headline:
+
+"Create Your Runner"
+
+Subheading:
+
+"Your real-world running journey starts here."
+
+Fields:
+
+Display Name
+Username
+Email
+Password
+
+Primary button:
+
+"CREATE ACCOUNT"
+
+Also include:
+
+"Already have an account? Log In"
+
+The screen should feel like a game onboarding experience, NOT a boring corporate registration form.
+
+==================================================
+3. LOGIN UI
+==================================================
+
+Create a clean login screen.
+
+Headline:
+
+"Welcome Back, Runner"
+
+Fields:
+
+Email
+Password
+
+Buttons:
+
+"START RUNNING"
+
+"Forgot Password?"
+
+"Create Account"
+
+Include proper loading and error states.
+
+==================================================
+4. FIRST-TIME RUNNER ONBOARDING
+==================================================
+
+After successful registration, DO NOT immediately send the user to the main dashboard.
+
+Show a short onboarding experience.
+
+The purpose is to understand the player's starting level and motivation.
+
+Do not make the onboarding long.
+
+==================================================
+STEP 1 — RUNNING EXPERIENCE
+==================================================
+
+Question:
+
+"What's your current running experience?"
+
+Options:
+
+🌱 I'm completely new
+🚶 I mostly walk
+🏃 I jog sometimes
+🔥 I run regularly
+⚡ I'm an athlete
+
+Only allow one selection.
+
+Save the selection to the user's profile.
+
+==================================================
+STEP 2 — PLAYER GOAL
+==================================================
+
+Question:
+
+"What do you want to achieve?"
+
+Options:
+
+🏃 Start running
+💪 Improve fitness
+⚡ Become faster
+🛣️ Run longer distances
+🏆 Train for competitions
+🥇 Train for a marathon
+🎮 Just play and explore
+
+Allow multiple selections.
+
+Save the selections to the user's profile.
+
+==================================================
+STEP 3 — ADVENTURE STYLE
+==================================================
+
+Question:
+
+"How do you want to play?"
+
+Options:
+
+🗺️ Explorer
+Discover and complete adventures.
+
+🏆 Challenger
+Complete difficult missions and unlock levels.
+
+⚡ Speed Runner
+Improve pace and personal records.
+
+🔥 Consistency Builder
+Build a regular running habit.
+
+🏅 Athlete
+Focus on performance and challenges.
+
+Allow the user to select one primary style.
+
+Save this preference to the user's profile.
+
+==================================================
+5. PLAYER PROFILE DATA
+==================================================
+
+Create/store these fields for each user where appropriate:
+
+- user_id
+- display_name
+- username
+- email
+- profile_image
+- running_experience
+- goals
+- adventure_style
+- level
+- xp
+- coins
+- total_distance
+- total_runs
+- best_pace
+- current_streak
+- onboarding_completed
+- created_at
+- updated_at
+
+Set initial values for a new player:
+
+level = 1
+xp = 0
+coins = 0
+total_distance = 0
+total_runs = 0
+current_streak = 0
+onboarding_completed = false
+
+==================================================
+6. FIRST GAME MISSION
+==================================================
+
+After onboarding, show the user's first mission.
+
+Create:
+
+MISSION 01
+
+"THE FIRST STEP"
+
+Goal:
+
+"Complete 1 KM"
+
+Description:
+
+"Walk, jog or run. Your adventure begins here."
+
+Reward:
+
++100 XP
++50 Coins
+
+Primary button:
+
+"START MISSION"
+
+This is extremely important.
+
+The first mission must make a complete beginner feel:
+
+"I can do this."
+
+Do NOT require the user to run fast.
+
+The goal is to get everyone moving.
+
+==================================================
+7. BEGINNER-FRIENDLY GAME DESIGN
+==================================================
+
+The game should NOT assume everyone is an athlete.
+
+A beginner should be able to participate.
+
+Walking + jogging + running should be supported for beginner missions.
+
+Do not make speed the primary measure of success for beginners.
+
+The game should reward:
+
+- Starting
+- Completing missions
+- Consistency
+- Improvement
+- Distance
+- Personal achievements
+
+Not only speed.
+
+==================================================
+8. LOCATION PERMISSION
+==================================================
+
+DO NOT request GPS/location permission during registration.
+
+Only request location permission when the user presses:
+
+"START MISSION"
+
+Explain why location is needed:
+
+"Location is used to measure your running distance and route during this mission."
+
+Handle:
+
+- Permission granted
+- Permission denied
+- GPS unavailable
+- GPS inaccurate
+- GPS temporarily lost
+
+without crashing the application.
+
+==================================================
+9. ONBOARDING EXPERIENCE
+==================================================
+
+Make the onboarding visually engaging.
+
+Use:
+
+- Progress indicator
+- Smooth transitions
+- Game-style cards
+- Large selection buttons
+- Clear primary CTA
+- Mobile-first layout
+
+Example:
+
+Step 1 / 3
+Step 2 / 3
+Step 3 / 3
+
+Allow the user to go back to previous steps.
+
+Do not make the user repeat registration if onboarding is interrupted.
+
+If onboarding is completed, set:
+
+onboarding_completed = true
+
+On future logins, skip onboarding and take the user directly to the main dashboard.
+
+==================================================
+10. PROFILE / DASHBOARD
+==================================================
+
+After completing onboarding, the dashboard should show:
+
+PLAYER NAME
+Username
+
+LEVEL 01
+XP 0 / required XP
+
+🪙 0 Coins
+
+Current Mission:
+
+"THE FIRST STEP"
+
+1 KM
+
+"START MISSION"
+
+Also show:
+
+Total Distance
+Total Runs
+Achievements
+
+Keep the dashboard game-focused.
+
+==================================================
+11. IMPORTANT UX PRINCIPLE
+==================================================
+
+Do NOT make the experience feel like:
+
+"Create fitness account → enter statistics → view boring dashboard."
+
+Make it feel like:
+
+"Create your character → choose your journey → receive your first mission → start your adventure."
+
+The core motivation loop is:
+
+CREATE RUNNER
+↓
+CHOOSE JOURNEY
+↓
+GET FIRST MISSION
+↓
+RUN 1 KM
+↓
+COMPLETE MISSION
+↓
+EARN XP + COINS
+↓
+LEVEL UP
+↓
+UNLOCK NEXT ADVENTURE
+
+==================================================
+12. SECURITY & DATA
+==================================================
+
+Use proper authentication and authorization.
+
+A user must only be able to access their own private profile data.
+
+Do not expose passwords.
+
+Validate all registration fields.
+
+Username should be unique.
+
+Email should be unique.
+
+Do not store unnecessary sensitive personal information.
+
+==================================================
+13. FINAL REQUIREMENT
+==================================================
+
+First inspect the existing project architecture.
+
+Before changing anything:
+
+- Identify the current authentication setup.
+- Identify the current database.
+- Identify the existing routing/navigation.
+- Identify the existing dashboard.
+- Identify the existing running/game components.
+
+Then integrate authentication and onboarding into the existing architecture.
+
+Do NOT create duplicate systems.
+
+After implementation, test the complete flow:
+
+NEW USER
+→ Registration
+→ Account creation
+→ Runner onboarding
+→ First mission
+→ Dashboard
+
+RETURNING USER
+→ Login
+→ Dashboard
+
+Also test:
+
+- Invalid email
+- Wrong password
+- Duplicate username
+- Duplicate email
+- Forgot password
+- Refreshing during onboarding
+- Logging out
+- Logging back in
+
+Fix any errors you encounter.
+
+At the end, give me a concise summary of:
+1. Files/components created or modified
+2. Authentication system used
+3. Database fields added
+4. Onboarding flow
+5. Any configuration/environment variables required
+6. Any remaining issues
