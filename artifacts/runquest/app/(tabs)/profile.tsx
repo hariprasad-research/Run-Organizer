@@ -5,12 +5,15 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '@/hooks/useColors';
 import { useRunQuest } from '@/context/RunQuestContext';
+import { useClerk, useUser } from '@clerk/expo';
 
 export default function ProfileScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { profile, resetProgress } = useRunQuest();
+  const { signOut } = useClerk();
+  const { isSignedIn } = useUser();
   const achievements = [{ icon: 'star' as const, title: 'First 500m', copy: 'Your first quest began' }, { icon: 'zap' as const, title: 'On a roll', copy: '4 day streak' }, { icon: 'award' as const, title: 'Explorer', copy: 'Complete 5 missions' }];
   return (
     <ScrollView style={{ backgroundColor: colors.background }} contentContainerStyle={[styles.content, { paddingTop: insets.top + 16, paddingBottom: insets.bottom + 100 }]} showsVerticalScrollIndicator={false}>
@@ -21,7 +24,7 @@ export default function ProfileScreen() {
       <Text style={[styles.section, { color: colors.foreground }]}>ACCOUNT</Text>
       <Pressable style={[styles.accountRow, { borderColor: colors.border }]} onPress={() => router.push('/history')}><Feather name="bar-chart-2" size={18} color={colors.primary} /><Text style={[styles.accountText, { color: colors.foreground }]}>Your stats</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Pressable>
       <Pressable style={[styles.accountRow, { borderColor: colors.border }]} onPress={() => Alert.alert('Safety first', 'Run at your own pace, stay aware of traffic and weather, and stop when your body asks you to.') }><Feather name="shield" size={18} color={colors.primary} /><Text style={[styles.accountText, { color: colors.foreground }]}>Safety & support</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Pressable>
-      <Pressable style={[styles.signOut, { borderColor: colors.border }]} onPress={() => { resetProgress(); router.replace('/'); }}><Feather name="log-out" size={17} color={colors.accent} /><Text style={[styles.signOutText, { color: colors.accent }]}>RESET LOCAL PROFILE</Text></Pressable>
+       <Pressable style={[styles.signOut, { borderColor: colors.border }]} onPress={async () => { await resetProgress(); if (isSignedIn) await signOut(); router.replace('/'); }}><Feather name="log-out" size={17} color={colors.accent} /><Text style={[styles.signOutText, { color: colors.accent }]}>{isSignedIn ? 'LOG OUT' : 'EXIT GUEST MODE'}</Text></Pressable>
     </ScrollView>
   );
 }

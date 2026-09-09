@@ -7,6 +7,10 @@ import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Tabs } from 'expo-router';
 import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
 import { SymbolView } from 'expo-symbols';
+import { useAuth, useUser } from '@clerk/expo';
+import { Redirect, useRouter } from 'expo-router';
+import { useEffect } from 'react';
+import { useRunQuest } from '@/context/RunQuestContext';
 
 // IMPORTANT: iOS 26 uses NativeTabs for native tabs with liquid glass support.
 // NativeTabs intentionally does NOT use custom design tokens — liquid glass
@@ -111,6 +115,20 @@ function ClassicTabLayout() {
 }
 
 export default function TabLayout() {
+  const { isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
+  const { isGuest } = useRunQuest();
+  const router = useRouter();
+  const metadata = (user?.unsafeMetadata ?? {}) as { onboardingCompleted?: boolean };
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn && !metadata.onboardingCompleted) router.replace('/onboarding' as never);
+  }, [isLoaded, isSignedIn, metadata.onboardingCompleted, router]);
+
+  if (!isLoaded) return null;
+  if (!isSignedIn && !isGuest) return <Redirect href="/" />;
+  if (isSignedIn && !metadata.onboardingCompleted) return <Redirect href={'/onboarding' as never} />;
+
   if (isLiquidGlassAvailable()) {
     return <NativeTabLayout />;
   }

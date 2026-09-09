@@ -56,8 +56,11 @@ type ContextValue = {
   profile: Profile;
   runs: RunRecord[];
   hasStarted: boolean;
+  isGuest: boolean;
   isHydrated: boolean;
   signIn: (username: string) => Promise<void>;
+  startGuest: () => void;
+  initializeNewRunner: (username: string) => Promise<void>;
   finishRun: (run: Omit<RunRecord, 'id' | 'date'>) => Promise<RunRecord>;
   resetProgress: () => Promise<void>;
 };
@@ -68,6 +71,7 @@ export function RunQuestProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile>(starterProfile);
   const [runs, setRuns] = useState<RunRecord[]>(starterRuns);
   const [hasStarted, setHasStarted] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -81,6 +85,7 @@ export function RunQuestProvider({ children }: { children: React.ReactNode }) {
         if (savedProfile) setProfile(JSON.parse(savedProfile) as Profile);
         if (savedRuns) setRuns(JSON.parse(savedRuns) as RunRecord[]);
         if (savedStarted) setHasStarted(savedStarted === 'true');
+        setIsGuest((await AsyncStorage.getItem('@runquest/guest')) === 'true');
       } finally {
         setIsHydrated(true);
       }
@@ -104,6 +109,31 @@ export function RunQuestProvider({ children }: { children: React.ReactNode }) {
     ]);
   };
 
+  const startGuest = () => {
+    setIsGuest(true);
+    setHasStarted(true);
+    void AsyncStorage.setItem('@runquest/guest', 'true');
+  };
+
+  const initializeNewRunner = async (username: string) => {
+    const nextProfile: Profile = {
+      username: username.trim() || 'NovaRunner',
+      level: 1,
+      xp: 0,
+      coins: 0,
+      totalDistance: 0,
+      totalRuns: 0,
+      bestPace: '--:--',
+      streak: 0,
+    };
+    setProfile(nextProfile);
+    setRuns([]);
+    setHasStarted(true);
+    setIsGuest(false);
+    await persist(nextProfile, []);
+    await AsyncStorage.setItem('@runquest/started', 'true');
+  };
+
   const finishRun = async (run: Omit<RunRecord, 'id' | 'date'>) => {
     const created: RunRecord = {
       ...run,
@@ -123,7 +153,7 @@ export function RunQuestProvider({ children }: { children: React.ReactNode }) {
     if (nextProfile.xp >= 1500 && profile.level === 3) nextProfile.level = 4;
     setRuns(nextRuns);
     setProfile(nextProfile);
-    await persist(nextProfile, nextRuns);
+    if (!isGuest) await persist(nextProfile, nextRuns);
     return created;
   };
 
@@ -131,16 +161,18 @@ export function RunQuestProvider({ children }: { children: React.ReactNode }) {
     setProfile(starterProfile);
     setRuns(starterRuns);
     setHasStarted(false);
+    setIsGuest(false);
     await Promise.all([
       AsyncStorage.removeItem('@runquest/profile'),
       AsyncStorage.removeItem('@runquest/runs'),
       AsyncStorage.removeItem('@runquest/started'),
+      AsyncStorage.removeItem('@runquest/guest'),
     ]);
   };
 
   const value = useMemo(
-    () => ({ profile, runs, hasStarted, isHydrated, signIn, finishRun, resetProgress }),
-    [profile, runs, hasStarted, isHydrated],
+    () => ({ profile, runs, hasStarted, isGuest, isHydrated, signIn, startGuest, initializeNewRunner, finishRun, resetProgress }),
+    [profile, runs, hasStarted, isGuest, isHydrated],
   );
 
   return <RunQuestContext.Provider value={value}>{children}</RunQuestContext.Provider>;
